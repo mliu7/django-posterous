@@ -2,7 +2,7 @@ Django-Posterous is a module that imports your posterous blog posts and saves th
 
 Installation
 ============
-Add django-posterous to your INSTALLED_APPS in settings.py:
+Add django-posterous to your INSTALLED_APPS in settings.py::
 
     INSTALLED_APPS = (
         ..,
@@ -11,14 +11,14 @@ Add django-posterous to your INSTALLED_APPS in settings.py:
 
 Add django-posterous to your python path
 
-Install Dependencies and sync your database:
+Install Dependencies and sync your database::
 
     $ pip install simplejson
     $ python manage.py syncdb
 
 Configuration 
 =============
-You need to configure django-posterous within your settings.py. The following variables each need to be defined so that this module knows which posterous blog to grab the entries from and where the entries should be stored. All of these variables are required and example responses are shown here:
+You need to configure django-posterous within your settings.py. The following variables each need to be defined so that this module knows which posterous blog to grab the entries from and where the entries should be stored. All of these variables are required and example responses are shown here::
 
     DJANGO_POSTEROUS_SITE_NAME = 'wiscospike'   # The site name of your posterous site (yoursitename.posterous.com)
     DJANGO_POSTEROUS_BLOG_MODULE = 'coltrane'   # The module of your django blog
@@ -30,7 +30,7 @@ You need to configure django-posterous within your settings.py. The following va
 
 Possible Gotchas
 ----------------
-This module assumes that your blog post model has a foreign key to an author. You can hard code the author of these blog posts by specifying this user in your settings.py as so:
+This module assumes that your blog post model has a foreign key to an author. You can hard code the author of these blog posts by specifying this user in your settings.py as so::
 
     DJANGO_POSTEROUS_AUTHOR = Users.objects.all()[0]
 
@@ -38,6 +38,6 @@ If no author is specified, it defaults to the first user in your database.
 
 Usage
 =====
-Django-posterous comes with a management command that fetches all public blog posts from your Posterous site, filters out any posts that have already been added to your blog, and then adds any new ones to your blog as you specified in the configuration. Using manage.py from within your blog, you can simply do the following:
+Django-posterous comes with a management command that fetches all public blog posts from your Posterous site, filters out any posts that have already been added to your blog, and then adds any new ones to your blog as you specified in the configuration. Using manage.py from within your blog, you can simply do the following::
 
     $ python manage.py get_new_posts
