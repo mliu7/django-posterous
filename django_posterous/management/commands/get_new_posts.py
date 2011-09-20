@@ -1,4 +1,3 @@
-import pdb
 import simplejson
 import urllib2
 from datetime import datetime
@@ -20,6 +19,10 @@ class Command(BaseCommand):
         date_field = settings.DJANGO_POSTEROUS_DATE_FIELD
         author_field = settings.DJANGO_POSTEROUS_AUTHOR_FIELD
         author_field_id = author_field + '_id'
+        try:
+            slug_field = settings.DJANGO_POSTEROUS_SLUG_FIELD
+        except:
+            slug_field = None
         author = None
 
         # Get all of the blog posts. Posterous limits you to 10 posts per API call, hence the loop
@@ -43,7 +46,7 @@ class Command(BaseCommand):
 
                 # Get author for the post if it was not specified in the settings file
                 if not author:
-                    author = User.objects.all()[0]
+                    author = User.objects.all().order_by('id')[0]
 
                 # create a new post
                 new_post = PostModel()
@@ -54,6 +57,8 @@ class Command(BaseCommand):
                 new_post.__dict__[date_field] = date
                 new_post.__dict__[author_field] = author
                 new_post.__dict__[author_field_id] = author.id
+                if slug_field:
+                    new_post.__dict__[slug_field] = post['slug']
                 new_post.save()
             
                 # Save this id in the database so it is not loaded again

@@ -11,10 +11,10 @@ Add django-posterous to your INSTALLED_APPS in settings.py::
 
 Add django-posterous to your python path
 
-Install Dependencies and sync your database::
+Install Dependencies and sync your database (Comes with an initial south migration)::
 
     $ pip install simplejson
-    $ python manage.py syncdb
+    $ python manage.py migrate django_posterous
 
 Configuration 
 =============
@@ -27,6 +27,7 @@ You need to configure django-posterous within your settings.py. The following va
     DJANGO_POSTEROUS_BODY_FIELD = 'body_html'   # The name of the field where your post will be stored
     DJANGO_POSTEROUS_DATE_FIELD = 'pub_date'    # The name of the field where the date of the post will be stored
     DJANGO_POSTEROUS_AUTHOR_FIELD = 'author'    # The name of the field where the author of the post will be stored
+    DJANGO_POSTEROUS_SLUG_FIELD = 'slug'        # (optional) The name of the field where the post's slug will be stored
 
 Possible Gotchas
 ----------------
