@@ -5,3 +5,6 @@ class BlogPost(models.Model):
         from the Posterous site 
     """
     posterous_id = models.IntegerField()
+
+    def __unicode__(self):
+        return 'Posterous Post #{0}'.format(self.posterous_id)
