@@ -28,6 +28,8 @@ You need to configure django-posterous within your settings.py. The following va
     DJANGO_POSTEROUS_DATE_FIELD = 'pub_date'    # The name of the field where the date of the post will be stored
     DJANGO_POSTEROUS_AUTHOR_FIELD = 'author'    # The name of the field where the author of the post will be stored
     DJANGO_POSTEROUS_SLUG_FIELD = 'slug'        # (optional) The name of the field where the post's slug will be stored
+    DJANGO_POSTEROUS_CUSTOM_SAVE = 'custom'     # (optional) The name of a method on your entry object you would rather
+                                                #            use for saving the model. 
 
 Possible Gotchas
 ----------------

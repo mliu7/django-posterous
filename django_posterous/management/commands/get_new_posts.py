@@ -18,6 +18,7 @@ class Command(BaseCommand):
         body_field = settings.DJANGO_POSTEROUS_BODY_FIELD
         date_field = settings.DJANGO_POSTEROUS_DATE_FIELD
         author_field = settings.DJANGO_POSTEROUS_AUTHOR_FIELD
+        custom_save = settings.DJANGO_POSTEROUS_CUSTOM_SAVE
         author_field_id = author_field + '_id'
         try:
             slug_field = settings.DJANGO_POSTEROUS_SLUG_FIELD
@@ -44,6 +45,10 @@ class Command(BaseCommand):
             # Ensure that this post has not already been saved to the blog
             if not BlogPost.objects.filter(posterous_id=post['id']).exists():
 
+                # Save this id in the database so it is not loaded again
+                blog_post = BlogPost(posterous_id=post['id'])
+                blog_post.save()
+
                 # Get author for the post if it was not specified in the settings file
                 if not author:
                     author = User.objects.all().order_by('id')[0]
@@ -59,8 +64,7 @@ class Command(BaseCommand):
                 new_post.__dict__[author_field_id] = author.id
                 if slug_field:
                     new_post.__dict__[slug_field] = post['slug']
-                new_post.save()
-            
-                # Save this id in the database so it is not loaded again
-                blog_post = BlogPost(posterous_id=post['id'])
-                blog_post.save()
+                if custom_save:
+                    new_post.__getattribute__(custom_save)()
+                else:
+                    new_post.save()
